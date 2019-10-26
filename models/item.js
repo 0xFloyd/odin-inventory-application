@@ -10,9 +10,10 @@ let ItemSchema = new Schema(
             type: Number,
             get: v => Math.round(v),
             set: v => Math.round(v),
+            required: true,
             alias: 'i'
           },
-          price: {type: Number, get: getPrice, set: setPrice },
+          price: {type: Number, get: getPrice, set: setPrice, required: true },
           category: [{ type: Schema.Types.ObjectId, ref: 'Category' }]
     }
 );
