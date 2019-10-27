@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='title') Name:
+      input#title.form-control(type='text', placeholder='Name of Item' name='name' required='true' value=(undefined===item ? '' : item.name) )
+    div.form-group
+      label(for='category') Categories:
+      select#category.form-control(type='select' placeholder='Select category' name='category' required='true' )
+        for category in categories
+          if item
+            //- Handle GET form, where book.author is an object, and POST form, where it is a string.
+            option(
+              value=category._id
+              selected=(
+                category._id.toString()==category.author._id
+                || category._id.toString()==item.category
+              ) ? 'selected' : false
+            ) #{category.name}
+          else
+            option(value=category._id) #{category.name}
+    div.form-group
+      label(for='description') Description:
+      textarea#description.form-control(type='textarea', placeholder='Description' name='description' rows='2' required='true') #{undefined===item ? '' : item.description}
+    div.form-group
+      label(for='stock') Stock:
+      input#stock.form-control(type='text', placeholder='# in stock' name='stock' value=(undefined===item ? '' : item.stock) required='true') 
+    div.form-group
+      label(for='price') Price:
+      input#price.form-control(type='text', placeholder='price' name='price' value=(undefined===item ? '' : item.price) required='true') 
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg
