@@ -3,3 +3,13 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  if error 
+    p Error getting dynamic content 
+  else  
+    p The inventory has the following record counts: 
+    p= results
+
+    ul
+      li #[strong Items:] !{data.item_count}
+      li #[strong Categories:] !{data.category_count}

@@ -72,42 +72,42 @@ function createCategories(cb) {
     );
   }
 
-  function createItems(cb) {
-    async.parallel(
-      [
-        function(callback) {
-            itemCreate(
-            "Jogging Pants",
-            "A nice pair of pants perfect for running",
-            85,
-            10.95,
-            categories[1],
-            callback
-          );
-        },
-        function(callback) {
-            itemCreate(
-                "Long Sleeve Polo",
-                "A nice shirt meant for colder weather",
-                120,
-                20.95,
-                categories[0],
-            callback
-          );
-        },
-        function(callback) {
-            itemCreate(  
-            "Johnny Fish Socks",
-            "A nice pair of the finest quality socks on earth from Johnny",
-            9123,
-            123,
-            categories[2],
-        callback);
-        }
-      ],
-      // Optional callback
-      cb
-    );
+function createItems(cb) {
+  async.parallel(
+    [
+      function(callback) {
+          itemCreate(
+          "Jogging Pants",
+          "A nice pair of pants perfect for running",
+          85,
+          10.95,
+          categories[1],
+          callback
+        );
+      },
+      function(callback) {
+          itemCreate(
+              "Long Sleeve Polo",
+              "A nice shirt meant for colder weather",
+              120,
+              20.95,
+              categories[0],
+          callback
+        );
+      },
+      function(callback) {
+          itemCreate(  
+          "Johnny Fish Socks",
+          "A nice pair of the finest quality socks on earth from Johnny",
+          9123,
+          123,
+          categories[2],
+      callback);
+      }
+    ],
+    // Optional callback
+    cb
+  );
 }
 
 

@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  
+  ul
+    - items_list.sort(function(a, b) {let textA = a.name.toUpperCase(); let textB = b.name.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+    each item in items_list
+      li 
+        each val, index in item.category
+            p #[a(href=item.url) #{item.name}] genre: #[a(href=val.url) #{val.name}]
+            if index < item.category.length - 1
+            |
+
+    else
+      li There are no items.
