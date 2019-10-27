@@ -27,7 +27,7 @@ function setPrice(num){
 }
 
 ItemSchema.virtual("url").get(function() {
-    return "/catalog/item/" + this._id;
+    return "/items/" + this._id;
   });
 
 //Export model

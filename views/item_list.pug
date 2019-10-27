@@ -8,7 +8,7 @@ block content
     each item in items_list
       li 
         each val, index in item.category
-            p #[a(href=item.url) #{item.name}] genre: #[a(href=val.url) #{val.name}]
+            p #[a(href=item.url) #{item.name}] category: #[a(href=val.url) #{val.name}]
             if index < item.category.length - 1
             |
 

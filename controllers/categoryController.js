@@ -28,3 +28,28 @@ exports.category_list = function (req, res, next) {
         });
 
 };
+
+// Display detail page for a specific Author.
+exports.category_detail = function (req, res, next) {
+
+    async.parallel({
+        category: function (callback) {
+            Category.findById(req.params.id)
+                .exec(callback)
+        },
+        category_items: function (callback) {
+            Item.find({ 'category': req.params.id }, 'name description')
+                .exec(callback)
+        },
+    }, function (err, results) {
+        if (err) { return next(err); } // Error in API usage.
+        if (results.category == null) { // No results.
+            var err = new Error('Author not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Successful, so render.
+            res.render('category_detail', { title: 'Category Detail', category: results.category, category_items: results.category_items });
+    });
+
+};

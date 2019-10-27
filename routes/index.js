@@ -11,7 +11,12 @@ router.get('/', category_controller.index);
 
 router.get('/categories', category_controller.category_list);
 
+router.get('/categories/:id', category_controller.category_detail);
+
 router.get('/items', item_controller.item_list);
+
+router.get('/items/:id', item_controller.item_detail);
+
 
 
 module.exports = router;
