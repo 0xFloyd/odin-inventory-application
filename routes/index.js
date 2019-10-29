@@ -32,6 +32,10 @@ router.get('/items/:id/update', item_controller.item_update_get);
 
 router.post('/items/:id/update', item_controller.item_update_post);
 
+router.get('/items/:id/delete', item_controller.item_delete_get);
+
+router.post('/items/:id/delete', item_controller.item_delete_post);
+
 router.get('/items/:id', item_controller.item_detail);
 
 router.get('/items', item_controller.item_list);

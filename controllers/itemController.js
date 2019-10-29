@@ -214,3 +214,46 @@ exports.item_update_post = [
         }
     }
 ];
+
+// Display Author delete form on GET.
+exports.item_delete_get = function (req, res, next) {
+
+    async.parallel({
+        item: function (callback) {
+            Item.findById(req.params.id).exec(callback)
+        },
+        category_items: function (callback) {
+            Item.find({ 'category': req.params.id }).exec(callback)
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.item == null) { // No results.
+            res.redirect('/items');
+        }
+        // Successful, so render.
+        res.render('item_delete', { title: 'Delete Item', item: results.item, category_items: results.category_items });
+    });
+
+};
+
+// Handle Author delete on POST.
+exports.item_delete_post = function (req, res, next) {
+
+    async.parallel({
+        item: function (callback) {
+            Item.findById(req.body.itemid).exec(callback)
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        // Success
+     
+        else {
+            // Author has no books. Delete object and redirect to the list of authors.
+            Item.findByIdAndRemove(req.body.itemid, function deleteItem(err) {
+                if (err) { return next(err); }
+                // Success - go to author list
+                res.redirect('/items')
+            })
+        }
+    });
+};
