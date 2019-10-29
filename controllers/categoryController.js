@@ -110,3 +110,53 @@ exports.category_create_post = [
         }
     }
 ];
+
+// Display Author delete form on GET.
+exports.category_delete_get = function (req, res, next) {
+
+    async.parallel({
+        category: function (callback) {
+            Category.findById(req.params.id).exec(callback)
+        },
+        category_items: function (callback) {
+            Item.find({ 'category': req.params.id }).exec(callback)
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.category == null) { // No results.
+            res.redirect('/categories');
+        }
+        // Successful, so render.
+        res.render('category_delete', { title: 'Delete Category', category: results.category, category_items: results.category_items });
+    });
+
+};
+
+// Handle Author delete on POST.
+exports.category_delete_post = function (req, res, next) {
+
+    async.parallel({
+        category: function (callback) {
+            Category.findById(req.body.categoryid).exec(callback)
+        },
+        category_items: function (callback) {
+            Item.find({ 'category': req.body.categoryid }).exec(callback)
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        // Success
+        if (results.category_items.length > 0) {
+            // Author has books. Render in same way as for GET route.
+            res.render('category_delete', { title: 'Delete Category', category: results.category, category_items: results.category_items });
+            return;
+        }
+        else {
+            // Author has no books. Delete object and redirect to the list of authors.
+            Category.findByIdAndRemove(req.body.categoryid, function deleteCategory(err) {
+                if (err) { return next(err); }
+                // Success - go to author list
+                res.redirect('/categories')
+            })
+        }
+    });
+};

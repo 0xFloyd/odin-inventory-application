@@ -16,7 +16,7 @@ block content
             option(
               value=category._id
               selected=(
-                category._id.toString()==category.author._id
+                category._id.toString()==category._id
                 || category._id.toString()==item.category
               ) ? 'selected' : false
             ) #{category.name}
