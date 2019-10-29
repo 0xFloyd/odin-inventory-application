@@ -16,10 +16,9 @@ block content
             option(
               value=category._id
               selected=(
-                category._id.toString()==category._id
+                category._id.toString()==item.category._id
                 || category._id.toString()==item.category
-              ) ? 'selected' : false
-            ) #{category.name}
+              ) ? 'selected' : false ) #{category.name}
           else
             option(value=category._id) #{category.name}
     div.form-group
