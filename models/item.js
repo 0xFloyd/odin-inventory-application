@@ -14,16 +14,16 @@ let ItemSchema = new Schema(
             alias: 'i'
           },
           price: {type: Number, get: getPrice, set: setPrice, required: true },
-          category: [{ type: Schema.Types.ObjectId, ref: 'Category' }]
+          category: { type: Schema.Types.ObjectId, ref: 'Category', required: true }
     }
 );
 
 function getPrice(num){
-    return (num/100).toFixed(2);
+    return (((num / 100) * 100).toFixed(2));
 }
 
 function setPrice(num){
-    return num*100;
+    return (((num / 100) * 100).toFixed(2));
 }
 
 ItemSchema.virtual("url").get(function() {

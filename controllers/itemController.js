@@ -29,12 +29,13 @@ exports.item_detail = function (req, res) {
     }, function (err, results) {
         if (err) { return next(err); }
         if (results.item == null) { // No results.
-            var err = new Error('Book not found');
+            var err = new Error('Item not found');
             err.status = 404;
             return next(err);
         }
         // Successful, so render.
-        res.render('item_detail', { Name: results.item.name, item: results.item });
+        console.log(results.item);
+        res.render('item_detail', { name: results.item.name, item: results.item });
     });
 };
 
@@ -113,6 +114,102 @@ exports.item_create_post = [
                 if (err) { return next(err); }
                 //successful - redirect to new book record.
                 res.redirect(item.url);
+            });
+        }
+    }
+];
+
+
+exports.item_update_get = function (req, res, next) {
+
+    // Get book, authors and genres for form.
+    async.parallel({
+        item: function (callback) {
+            Item.findById(req.params.id).populate('category').exec(callback);
+        },
+        categories: function (callback) {
+            Category.find(callback);
+        },
+    }, function (err, results) {
+        if (err) { return next(err); }
+        if (results.item == null) { // No results.
+            var err = new Error('Item not found');
+            err.status = 404;
+            return next(err);
+        }
+
+        // Success.
+        res.render('item_form', { title: 'Update Item', categories: results.categories, item: results.item });
+    });
+
+};
+
+// Handle book update on POST.
+exports.item_update_post = [
+
+    // Convert the genre to an array
+    (req, res, next) => {
+        if (!(req.body.category instanceof Array)) {
+            if (typeof req.body.category === 'undefined')
+                req.body.category = [];
+            else
+                req.body.category = new Array(req.body.category);
+        }
+        next();
+    },
+
+    // Validate fields.
+    body('name', 'Name must not be empty.').isLength({ min: 1 }).trim(),
+    body('description', 'Description must not be empty.').isLength({ min: 1 }).trim(),
+    body('stock', 'Stock must not be empty.').isLength({ min: 1 }).trim(),
+    body('price', 'Price must not be empty').isLength({ min: 1 }).trim(),
+    body('category', 'Category must not be empty').isLength({ min: 1 }).trim(),
+
+    // Sanitize fields.
+    sanitizeBody('name').escape(),
+    sanitizeBody('description').escape(),
+    sanitizeBody('stock').escape(),
+    sanitizeBody('price').escape(),
+    sanitizeBody('category.*').escape(),
+
+    // Process request after validation and sanitization.
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a Book object with escaped/trimmed data and old id.
+        var item = new Item(
+            {
+                name: req.body.name,
+                description: req.body.description,
+                stock: req.body.stock,
+                price: req.body.price,
+                category: (typeof req.body.category === 'undefined') ? [] : req.body.category,
+                _id: req.params.id //This is required, or a new ID will be assigned!
+            });
+
+        if (!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/error messages.
+
+            // Get all authors and genres for form.
+            async.parallel({
+                categories: function (callback) {
+                    Category.find(callback);
+                },
+            }, function (err, results) {
+                if (err) { return next(err); }
+
+                res.render('item_form', { title: 'Update Item', categories: results.categories, item: item, errors: errors.array() });
+            });
+            return;
+        }
+        else {
+            // Data from form is valid. Update the record.
+            Item.findByIdAndUpdate(req.params.id, item, {}, function (err, theitem) {
+                if (err) { return next(err); }
+                // Successful - redirect to book detail page.
+                res.redirect(theitem.url);
             });
         }
     }
