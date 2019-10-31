@@ -1,14 +1,16 @@
 extends layout
 
 block content
-  h1= title
+  div(class="row")
+    div(class="col align-self-center")
+      h1.main-title= title
 
-  if error 
-    p Error getting dynamic content 
-  else  
-    p Current Inventory Stock
-    p= results
+      if error 
+        p Error getting dynamic content 
+      else  
+        p Current Inventory Stock
+        p= results
 
-    ul
-      li #[strong Items:] !{data.item_count}
-      li #[strong Categories:] !{data.category_count}
+        ul.inventory-unordered-list
+          li.inventory-list #[strong Items:] !{data.item_count}
+          li.inventory-list #[strong Categories:] !{data.category_count}

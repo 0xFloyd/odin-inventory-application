@@ -1,17 +1,60 @@
 body {
-  padding: 50px;
-  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  font: 18px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+
 
 a {
   color: #00B7FF;
 }
 
+#main-inventory-brand {
+   color: #00B7FF;
+}
 
 li {
   list-style-type: none;
 }
 
 .navbar-link {
-  padding: 20px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.navbar-item {
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+#navbarToggleButton {
+  padding: 10px;
+  border-radius: 3px;
+}
+
+.navbar-nav {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.navbar-brand {
+  padding-right: 20px;
+  padding-left: 20px;
+  font: 24px;
+}
+
+.main-title {
+  font-size: 32px;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.inventory-list {
+  padding-right: 0px;
+  padding-left: 0px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.inventory-unordered-list {
+  padding: 0px;
 }

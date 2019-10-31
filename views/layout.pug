@@ -4,29 +4,33 @@ html(lang='en')
     title= title
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css')
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js')
+    link(rel='stylesheet', href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+    script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous")
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    div(class='container-fluid')
-      nav(class="navbar navbar-expand-lg navbar-light")
-        button(class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
-          span(class="navbar-toggler-icon")
-        div(class="collapse navbar-collapse" id="navbarSupportedContent")
-          ul(class='navbar-nav')
-            li(class='nav-item')
-              a(class="nav-link" href='/') Home
-            li(class='nav-item') 
-              a(class="nav-link" href='/categories') All Categories
-            li(class='nav-item')
-              a(class="nav-link" href='/items') All Items
-              hr
-            li(class='nav-item')
-              a(class="nav-link" href='/categories/create') Create new Category
-            li(class='nav-item')
-              a(class="nav-link" href='/items/create') Create new Item
+    nav.navbar.navbar-expand-lg.navbar-light.bg-light
+      a.navbar-brand(href='/' id='main-inventory-brand') Inventory Application
+      button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation')
+        span.navbar-toggler-icon
+  
+      .collapse.navbar-collapse(id='navbarSupportedContent')
+        ul.navbar-nav.mr-auto
+          li.nav-item
+            a.nav-link(href='/') Home
+          li.nav-item
+            a.nav-link(href='/categories') All Categories
+          li.nav-item
+            a.nav-link(href='/items') All Items
+        ul.navbar-nav.float-lg-right
+          li.nav-item
+            a.nav-link(href='/categories/create') Create New Category
+          li.nav-item
+            a.nav-link(href='/items/create') Create New Item
       
-                
-        div(class='col-sm-10')
+             
+    .container
+      .row
+        .col.align-self-center
           block content
