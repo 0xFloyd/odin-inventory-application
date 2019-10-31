@@ -20,7 +20,8 @@
     "helmet": "^3.21.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
-    "pug": "^2.0.4"
+    "pug": "^2.0.4",
+    "mongoose": "^5.7.5"
   },
   "devDependencies": {
     "mongoose": "^5.7.7",
