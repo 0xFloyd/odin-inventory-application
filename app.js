@@ -11,19 +11,13 @@ var indexRouter = require('./routes/index');
 
 //  var usersRouter = require('./routes/users');
 //  var contactRouter = require('./routes/contact');
-const result = dotenv.config();
-
-if (result.error) {
-  throw result.error;
-}
 
 
 var app = express();
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var dev_db_url = process.env.DB_HOST;
-var mongoDB = process.env.MONGODB_URI || dev_db_url;
+var mongoDB = process.env.DB_HOST;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
