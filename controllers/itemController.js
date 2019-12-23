@@ -34,7 +34,7 @@ exports.item_detail = function (req, res) {
             return next(err);
         }
         // Successful, so render.
-        console.log(results.item);
+        //console.log(results.item);
         res.render('item_detail', { name: results.item.name, item: results.item });
     });
 };

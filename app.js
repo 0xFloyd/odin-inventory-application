@@ -5,19 +5,24 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var compression = require('compression');
 var helmet = require('helmet');
+const dotenv = require('dotenv');
 
 var indexRouter = require('./routes/index');
 
 //  var usersRouter = require('./routes/users');
 //  var contactRouter = require('./routes/contact');
+const result = dotenv.config();
 
+if (result.error) {
+  throw result.error;
+}
 
 
 var app = express();
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-var dev_db_url = 'mongodb+srv://ryanfloyd:iEoAGvw98QR1zEc4@cluster0-i4tnf.mongodb.net/odin-inventory?retryWrites=true&w=majority';
+var dev_db_url = process.env.DB_HOST;
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 var db = mongoose.connection;
